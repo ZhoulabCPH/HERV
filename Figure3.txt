@@ -1,3 +1,4 @@
+########################################
 uniCox_exp<-read.table(file = "uniCox_exp.txt",header=TRUE,sep="\t",stringsAsFactors=FALSE)
 uniCox_group<-read.table(file = "uniCox_group.txt",header=TRUE,sep="\t",stringsAsFactors=FALSE)
 exp<-uniCox_exp[which(uniCox_exp$pvalue<0.05),1]
@@ -16,7 +17,7 @@ p1<-ggplot(data_plot,aes(x=Hazard.Ratio,y=name))+
   xlab(bquote(italic('Hazard Ratios')))+ylab(NULL)+
   ggtitle('Univariate Cox Analysis (OS)')+
   theme1+ scale_color_manual(values = col_1)
-
+############################################
 ERV_DE<-uniCox_group[which(uniCox_group[,1]%in%inter),]
 ERV_type<-read.table(file = "ERV_type.txt",header=TRUE,sep="\t",stringsAsFactors=FALSE)
 data<-merge(ERV_DE,ERV_type,by.x=colnames(ERV_DE)[1],by.y=colnames(ERV_type)[1])
@@ -33,7 +34,7 @@ p2<-ggplot(data_plot,aes(x=Hazard.Ratio,y=name))+
 
 library(aplot)
 p2%>%insert_right(p1, width = 1)
-
+###############################################
 inter<-read.table(file = "gene.txt",header=FALSE,sep="\t",stringsAsFactors=FALSE)
 ERV_type<-read.table(file = "ERV_type.txt",header=TRUE,sep="\t",stringsAsFactors=FALSE)
 tt<-merge(inter,ERV_type,by.x=colnames(inter)[1],by.y=colnames(ERV_type)[1])
@@ -46,8 +47,8 @@ uniCox_exp<-read.table(file = "uniCox_exp.txt",header=TRUE,sep="\t",stringsAsFac
 HR<-uniCox_exp[which(uniCox_exp[,1]%in%inter[,1]),2]
 barplot(c(length(which(HR>1)),length(which(HR<1))),las=1,col = brewer.pal(n = 3, name = "RdBu")[1],
 names=c("HR>1","HR<1"),ylab = "Number of HERV")
-
-library(corrplot) # 加载包
+###############################################
+library(corrplot) 
 TPM<-read.table(file = "ESCC_TPM.txt",header = TRUE, sep="\t",row.names=1,stringsAsFactors = F)
 df<-read.table(file = "gene.txt",header=FALSE,sep="\t",stringsAsFactors=F)
 dd<-TPM[df[,1],1:137]
@@ -56,7 +57,7 @@ library(RColorBrewer)
 corrplot(data, method = "square", type = "lower",col = rev(c("#2f3a7d","#4A7A9F","#76B6EA","#A2D5F2","#D4E6F1","#F9E79F","#F7DC6F","#F9CA3F","#F9A825")),
 tl.col = "n", tl.cex = 0.8, tl.pos = "n",order = 'AOE',
 add = T)
-
+################################################
 inter<-read.table(file = "gene.txt",header=FALSE,sep="\t",stringsAsFactors=FALSE)[,1]
 Data<-read.table(file = "ERV_cor_down.txt",header=TRUE,sep="\t",stringsAsFactors=FALSE)
 gene<-unique(Data[which(Data[,1]%in%inter),2])
@@ -64,7 +65,7 @@ tt<-bitr(gene,fromType = "ENSEMBL", toType = "SYMBOL", OrgDb = "org.Hs.eg.db")
 BP<-enrichGO(tt[,2],OrgDb = "org.Hs.eg.db",ont = "BP",pvalueCutoff = 0.05,
 qvalueCutoff = 0.05,keyType = "SYMBOL")
 write.table(BP,file = "inter_de_cor_bp_down.txt",sep="\t",quote=F,row.names=F)
-
+###################################################
 GO_data<-read.table(file = "inter_de_cor_bp_down.txt",header=TRUE,sep="\t",stringsAsFactors=FALSE)[1:20,]
 GO_data <- GO_data[order(GO_data$qvalue,decreasing = T),]
 level <- GO_data[,2] 
@@ -75,21 +76,21 @@ p1 <- ggplot(GO_data) +
   scale_fill_continuous(low="#D4E6F1", high="#76B6EA") +
   coord_flip() + 
   theme(
-    axis.title = element_text(size=15,face="plain",color="black"),# 轴标题
-    axis.text = element_text(size=12,face="plain",color="black"), # 轴标签
-    axis.text.y = element_text(hjust=1,vjust=0.6), # y轴的标签对齐
-    # axis.title.y = element_blank(), # y轴的标题，加上后不显示标题
-    legend.title = element_blank(), # 图例标题
-    legend.text = element_text(size = 8, face = "bold"), # 图例标签
-    legend.margin = margin(t = 0, r = 0, b = 0, l = 0, unit = "pt"), # 图例边缘的空隙
-    legend.direction = "vertical", # 图列的方向
-    # legend.position = c(0.9,0.92), # 图例的位置
-    legend.background = element_blank(), # 图例的背景
+    axis.title = element_text(size=15,face="plain",color="black"),
+    axis.text = element_text(size=12,face="plain",color="black"), 
+    axis.text.y = element_text(hjust=1,vjust=0.6), 
+    # axis.title.y = element_blank(), 
+    legend.title = element_blank(), 
+    legend.text = element_text(size = 8, face = "bold"), 
+    legend.margin = margin(t = 0, r = 0, b = 0, l = 0, unit = "pt"), 
+    legend.direction = "vertical", 
+    # legend.position = c(0.9,0.92), 
+    legend.background = element_blank(), 
     panel.background = element_rect(fill = "transparent",colour = "black"), 
     plot.background = element_blank()
   ) + 
   labs(x = "Biological Process");p1
-  
+###########################################  
 library(tidyr) 
 Data<-read.table(file = "qpcr_long.txt",header=TRUE,sep="\t")
 ggplot(data = Data, aes(y = value, x = type, fill = type, color = type)) + 
