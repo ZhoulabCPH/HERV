@@ -1,3 +1,4 @@
+##################################
 library("limma")
 library("clusterProfiler")
 library("tibble")
@@ -21,7 +22,6 @@ timer <- deconvo_tme(eset = data, method = "timer", group_list = rep("uvm", dim(
 library(ggpubr)
 library(stringr)
 library(forcats)
-# 分组
 timer_long <- timer %>% 
   select(ID,everything()) %>% 
   pivot_longer(-ID,names_to = "cell_type",values_to = "fraction") %>% 
@@ -43,8 +43,7 @@ p3 <- ggplot(tt,aes(fct_reorder(cell_type,fraction),fraction,fill = Group)) +
   stat_compare_means(aes(group = Group,label = ..p.signif..),
                      method = "kruskal.test",label.y = 0.78)+
 					 scale_fill_manual(values=c("MediumAquamarine","SandyBrown","Coral2")) 
-p3 
-
+##########################################################
 xcell_long <- xcell %>% 
   select(ID,everything()) %>% 
   pivot_longer(-ID,names_to = "cell_type",values_to = "fraction") %>% 
@@ -65,8 +64,7 @@ p3 <- ggplot(tt,aes(fct_reorder(cell_type,fraction),fraction,fill = Group)) +
         axis.text = element_text(color = "black",size = 12))+
   stat_compare_means(aes(group = Group,label = ..p.signif..),
                      method = "kruskal.test",label.y = 2)
-p3
-
+#############################################################
 
 
 tmp<-data.frame(Group = xcell_type[,2],Tcell = xcell_type[,24])
@@ -133,7 +131,7 @@ g10<-ggplot(tmp, aes(Group, Tcell,  fill = Group )) +
 library("cowplot")
 ggarrange(g3,g4,g7,g8,g9,g10,nrow=2,ncol = 3)					 
 
-
+##########################################################
 library("limma")
 library("clusterProfiler")
 library("tibble")
