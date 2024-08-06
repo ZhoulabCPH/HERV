@@ -1,3 +1,4 @@
+############################################
 df<-read.table(file = "ERV_cox_DE.txt",header=FALSE,sep="\t",stringsAsFactors=F)
 library(ConsensusClusterPlus)
 results = ConsensusClusterPlus(as.matrix(df),maxK=6,reps=1000,pItem=0.8,pFeature=1,
@@ -53,7 +54,7 @@ fviz_pca_ind(res.pca,
 )							   
 							   
 
-setwd("D:\\work\\project\\ESCC\\ERV\\ESCC_GEO")
+###################################################
 TPM<-read.table(file = "TPM.txt",header = TRUE, sep="\t",row.names=1,stringsAsFactors = F)
 df<-read.table(file = "gene.txt",header=TRUE,sep="\t",stringsAsFactors=F)
 dd<-TPM[which(rownames(TPM)%in%df[,1]),1:23]
@@ -104,7 +105,7 @@ fviz_pca_ind(res.pca,
              legend.title = "Groups"
 )
 
-
+####################################################
 library(tidyr) 
 Data<-read.table(file = "qpcr_long.txt",header=TRUE,sep="\t")
 dd<-Data[which(Data[,2]%in%"Tumor"),c(1,3,4)]
@@ -161,7 +162,7 @@ fviz_pca_ind(res.pca,
              legend.title = "Groups"
 )
 	
-
+############################################################
 library(survival)
 library(survminer)
 library(RColorBrewer)
@@ -190,26 +191,26 @@ ps <- pairwise_survdiff(Surv(OS.time, OS)~ group,
 mycol <- brewer.pal(n = 10, "Paired")[c(2,4,6,8)]
 names(fit$strata) <- gsub("group=", "", names(fit$strata))
 p <- ggsurvplot(fit               = fit,
-                conf.int          = FALSE, # 不绘制置信区间
-                risk.table        = TRUE, # 生存风险表
+                conf.int          = FALSE, 
+                risk.table        = TRUE, 
                 risk.table.col    = "strata",
-                palette           = mycol, # KM曲线颜色
+                palette           = mycol, 
                 data              = dat,
-                #xlim              = c(0,60), # 时间轴，一般考虑5年（原文）或者10年长度
+                #xlim              = c(0,60),
                 size              = 1,
-                break.time.by     = 12, # 时间轴的刻度（每年）
+                break.time.by     = 12, 
                 legend.title      = "",
                 xlab              = "Time (months)",
                 ylab              = "Overall survival", #Overall survival Disease free survival
                 risk.table.y.text = FALSE,
-                tables.height     = 0.3) # 风险表的高度
+                tables.height     = 0.3) 
 
 p.lab <- paste0("log-rank test P",
-                ifelse(p.val < 0.001, " < 0.001", # 若P值<0.001则标记为“<0.001”
+                ifelse(p.val < 0.001, " < 0.001", 
                        paste0(" = ",round(p.val, 3))))
 
 p$plot <- p$plot + annotate("text",
-                            x = 0, y = 0.55, # 在y=0.55处打印overall p值
+                            x = 0, y = 0.55,
                             hjust = 0,
                             fontface = 4,
                             label = p.lab)
@@ -226,7 +227,7 @@ p$plot <- p$plot +
 pdf(".pdf", width = 4.5, height = 6)
 
 dev.off()	 
-
+############################################
 library(survival)
 library(survminer)
 library(RColorBrewer)
@@ -256,26 +257,26 @@ ps <- pairwise_survdiff(Surv(OS.time, OS)~ group,
 mycol <- brewer.pal(n = 10, "Paired")[c(2,4,6,8)]
 names(fit$strata) <- gsub("group=", "", names(fit$strata))
 p <- ggsurvplot(fit               = fit,
-                conf.int          = FALSE, # 不绘制置信区间
-                risk.table        = TRUE, # 生存风险表
+                conf.int          = FALSE,
+                risk.table        = TRUE,
                 risk.table.col    = "strata",
-                palette           = mycol, # KM曲线颜色
+                palette           = mycol,
                 data              = dat,
-                #xlim              = c(0,60), # 时间轴，一般考虑5年（原文）或者10年长度
+                #xlim              = c(0,60), 
                 size              = 1,
-                break.time.by     = 12, # 时间轴的刻度（每年）
+                break.time.by     = 12, 
                 legend.title      = "",
                 xlab              = "Time (months)",
                 ylab              = "Disease free survival", #Overall survival Disease free survival
                 risk.table.y.text = FALSE,
-                tables.height     = 0.3) # 风险表的高度
+                tables.height     = 0.3) 
 
 p.lab <- paste0("log-rank test P",
-                ifelse(p.val < 0.001, " < 0.001", # 若P值<0.001则标记为“<0.001”
+                ifelse(p.val < 0.001, " < 0.001", c
                        paste0(" = ",round(p.val, 3))))
 
 p$plot <- p$plot + annotate("text",
-                            x = 0, y = 0.55, # 在y=0.55处打印overall p值
+                            x = 0, y = 0.55, 
                             hjust = 0,
                             fontface = 4,
                             label = p.lab)
